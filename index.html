@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        #results img {
+            width: 100px;
+            height: auto;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="results"></div>
+
+    <script>
+        fetch('https://fakestoreapi.com/products')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                const mark = document.getElementById("results");
+                data.forEach(product => {
+                    mark.innerHTML += `<img src="${product.image}" alt="Product Image">`;
+                });
+            });
+    </script>
+</body>
+</html>
