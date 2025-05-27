@@ -3,37 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        #results {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        #results img {
-            width: 100px;
-            height: auto;
-            object-fit: contain;
-            border: 1px solid #ddd;
-            padding: 5px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-    </style>
+    <title>API</title>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(145deg, #f0f4f8, #e8ecf3);
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 30px 0 10px;
+        font-size: 2.5em;
+        color: #2c3e50;
+        letter-spacing: 1px;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+        padding: 40px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .product {
+        background-color: #fff;
+        border-radius: 16px;
+        border: 2px solid transparent;
+        padding: 20px;
+        width: 200px;
+        margin: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        cursor: default;
+    }
+
+    .product:hover {
+        border-image: linear-gradient(135deg, #16a085, #2980b9) 1;
+        transform: scale(1.03);
+        box-shadow: 0 12px 30px rgba(22, 160, 133, 0.3);
+        cursor: pointer;
+    }
+
+
+    .picture {
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        background-color: #f7f9fa;
+        padding: 10px;
+    }
+
+    .product-details {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #34495e;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    .price {
+        font-size: 18px;
+        color: #16a085;
+        font-weight: bold;
+    }
+</style>
+
+    
 </head>
 <body>
-    <div id="results"></div>
-
+    <p id="results" class="products"></p>
     <script>
+        const results = document.getElementById("results");
+        //fetching all products
         fetch('https://fakestoreapi.com/products')
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                const mark = document.getElementById("results");
-                data.forEach(product => {
-                    mark.innerHTML += `<img src="${product.image}" alt="Product Image">`;
-                });
-            });
+        .then(response => response.json())
+        .then((data) => {
+            data.map((product) => {
+                results.innerHTML += `
+                <section class="product">
+                  <picture>
+                    <img src="${product.image}" alt="${product.title}" class="picture" />
+                  </picture>
+                  <p class="product-details">
+                    <span class="title">
+                      ${product.title}
+                    </span>
+                    <span class="price">
+                        $${product.price}
+                    <span>
+                  </p>
+                </section>
+                `;
+            })
+        })
+        
+
     </script>
 </body>
 </html>
